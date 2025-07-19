@@ -50,7 +50,16 @@ export const FlipWords = ({
 
   // Before animation is enabled, don't render anything
   if (!canAnimate) {
-    return null;
+    return (
+      <div
+        className={cn(
+          "z-10 inline-block relative text-left text-neutral-900 dark:text-neutral-100 px-2 opacity-0",
+          className
+        )}
+      >
+        {words[0]}
+      </div>
+    );
   }
 
   return (
