@@ -1,7 +1,13 @@
 import avatar from "../assets/images/avatar.jpg";
 import { TextHoverEffect } from "../Components/ui/text-hover-effect";
+import { FlipWords } from "../Components/ui/flip-words";
 
 function About() {
+  const words = [
+    "As a full-stack developer with many years of experience,",
+    "I have worked in quite a few projects of all stacks and sizes.",
+    `I have a passion for making ideas come to life using tech (and coffee).`,
+  ];
   return (
     <section className="bg-black">
       <div className="lg:flex w-full justify-between">
@@ -10,15 +16,8 @@ function About() {
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
             Hello there,
           </h1>
-          <p className="px-4 mt-6 text-2xl leading-8 text-gray-600 font-thin">
-            As a full-stack developer with many years of experience,{" "}
-          </p>
-          <p className="px-5 mt-6 text-2xl leading-8 text-gray-600 font-thin">
-            I have worked in quite a few projects of all stacks and sizes.
-          </p>
-          <p className="px-6 mt-6 text-2xl leading-8 text-gray-600 font-thin">
-            I have a passion for making ideas come to life using tech (and
-            coffee).
+          <p className="px-4 mt-6 text-3xl leading-8 text-gray-600 font-thin">
+            <FlipWords words={words} />
           </p>
 
           <div>
