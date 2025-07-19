@@ -1,5 +1,13 @@
+import About from "./Components/About";
+// import Projects from "./Components/Projects";
+
 function App() {
-  return <h1 className="text-blue-500 font-sans">Hello world!</h1>;
+  return (
+    <>
+      <About />
+      {/* <Projects /> */}
+    </>
+  );
 }
 
 export default App;
