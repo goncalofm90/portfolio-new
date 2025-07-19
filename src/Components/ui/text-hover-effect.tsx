@@ -15,6 +15,11 @@ export const TextHoverEffect = ({
   const [hovered, setHovered] = useState(false);
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
 
+  const uniqueId = useRef(Math.random().toString(36).substr(2, 9));
+  const textGradientId = `textGradient-${uniqueId.current}`;
+  const revealMaskId = `revealMask-${uniqueId.current}`;
+  const textMaskId = `textMask-${uniqueId.current}`;
+
   useEffect(() => {
     if (svgRef.current && cursor.x !== null && cursor.y !== null) {
       const svgRect = svgRef.current.getBoundingClientRect();
@@ -41,7 +46,7 @@ export const TextHoverEffect = ({
     >
       <defs>
         <linearGradient
-          id="textGradient"
+          id={textGradientId}
           gradientUnits="userSpaceOnUse"
           cx="50%"
           cy="50%"
@@ -59,7 +64,7 @@ export const TextHoverEffect = ({
         </linearGradient>
 
         <motion.radialGradient
-          id="revealMask"
+          id={revealMaskId}
           gradientUnits="userSpaceOnUse"
           r="20%"
           initial={{ cx: "50%", cy: "50%" }}
@@ -77,13 +82,13 @@ export const TextHoverEffect = ({
           <stop offset="0%" stopColor="white" />
           <stop offset="100%" stopColor="black" />
         </motion.radialGradient>
-        <mask id="textMask">
+        <mask id={textMaskId}>
           <rect
             x="0"
             y="0"
             width="100%"
             height="100%"
-            fill="url(#revealMask)"
+            fill={`url(#${revealMaskId})`}
           />
         </mask>
       </defs>
@@ -122,9 +127,9 @@ export const TextHoverEffect = ({
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        stroke="url(#textGradient)"
+        stroke={`url(#${textGradientId})`}
         strokeWidth="0.3"
-        mask="url(#textMask)"
+        mask={`url(#${textMaskId})`}
         className="fill-transparent font-[helvetica] text-6xl font-bold uppercase"
       >
         {text}
