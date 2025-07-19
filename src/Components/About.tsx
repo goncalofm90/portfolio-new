@@ -16,9 +16,9 @@ function About() {
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
             Hello there,
           </h1>
-          <p className="px-4 mt-6 text-3xl leading-8 text-gray-600 font-thin">
+          <div className="px-4 mt-6 text-3xl leading-8 text-gray-600 font-thin">
             <FlipWords words={words} />
-          </p>
+          </div>
 
           <div>
             <div className="mt-10 flex-col items-center gap-x-6">
