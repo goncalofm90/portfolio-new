@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../../lib/utils";
 
@@ -7,27 +7,51 @@ export const FlipWords = ({
   words,
   duration = 5000,
   className,
+  initialDelay = 3000,
 }: {
   words: string[];
   duration?: number;
   className?: string;
+  initialDelay?: number;
 }) => {
-  const [currentWord, setCurrentWord] = useState(words[0]);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-
-  // thanks for the fix Julian - https://github.com/Julian-AT
-  const startAnimation = useCallback(() => {
-    const word = words[words.indexOf(currentWord) + 1] || words[0];
-    setCurrentWord(word);
-    setIsAnimating(true);
-  }, [currentWord, words]);
+  const [canAnimate, setCanAnimate] = useState(false);
 
   useEffect(() => {
-    if (!isAnimating)
-      setTimeout(() => {
-        startAnimation();
+    // Initial delay before enabling animations
+    const initialTimer = window.setTimeout(() => {
+      setCanAnimate(true);
+    }, initialDelay);
+
+    return () => clearTimeout(initialTimer);
+  }, [initialDelay]);
+
+  useEffect(() => {
+    if (!canAnimate) return;
+
+    let timeoutId: number;
+
+    if (!isAnimating) {
+      timeoutId = window.setTimeout(() => {
+        setCurrentWordIndex((prev) => (prev + 1) % words.length);
+        setIsAnimating(true);
       }, duration);
-  }, [isAnimating, duration, startAnimation]);
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [canAnimate, isAnimating, words.length, duration]);
+
+  const currentWord = words[currentWordIndex];
+
+  // Before animation is enabled, don't render anything
+  if (!canAnimate) {
+    return null;
+  }
 
   return (
     <AnimatePresence
