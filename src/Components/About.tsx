@@ -31,7 +31,7 @@ function About() {
         {/* Right side angled image */}
         <div className="flex-1 relative lg:ml-8">
           <div
-            className="aspect-[3/4] w-full max-w-lg overflow-hidden rounded-3xl bg-gray-50 sm:max-w-3xl lg:max-w-none"
+            className="aspect-[3/4] w-full max-w-lg overflow-hidden rounded-3xl sm:max-w-3xl lg:max-w-none"
             style={{
               clipPath: "polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%)",
             }}
