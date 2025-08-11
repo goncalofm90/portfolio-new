@@ -1,6 +1,6 @@
-import avatar from "../assets/images/avatar.jpg";
 import { TextHoverEffect } from "../Components/ui/text-hover-effect";
 import { FlipWords } from "../Components/ui/flip-words";
+import { Avatar } from "../Components/ui/avatar";
 
 function About() {
   const words = [
@@ -9,8 +9,8 @@ function About() {
     `I have a passion for making ideas come to life using tech (and coffee).`,
   ];
   return (
-    <section className="bg-black">
-      <div className="lg:flex w-full justify-between">
+    <section className="bg-black min-h-screen max-h-screen w-full overflow-hidden snap-child h-screen">
+      <div className="lg:flex w-full justify-between max-w-full">
         {/* Left side text */}
         <div className="flex-1 py-24 lg:py-48 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
@@ -29,20 +29,7 @@ function About() {
         </div>
 
         {/* Right side angled image */}
-        <div className="flex-1 relative lg:ml-8">
-          <div
-            className="aspect-[3/4] w-full max-w-lg overflow-hidden rounded-3xl sm:max-w-3xl lg:max-w-none"
-            style={{
-              clipPath: "polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%)",
-            }}
-          >
-            <img
-              src={avatar}
-              alt="Gonçalo Mendes web developer"
-              className="h-full w-full object-cover object-center text-center"
-            />
-          </div>
-        </div>
+        <Avatar />
       </div>
     </section>
   );
