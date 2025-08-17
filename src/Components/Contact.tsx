@@ -12,7 +12,7 @@ const Contact: React.FC = () => {
         backgroundColor="black"
         className="flex items-center flex-col justify-center px-2 md:px-10 py-4 w-full h-full"
       >
-        <h2 className="text-white text-8xl md:text-8xl text-center text-outline">
+        <h2 className="text-white text-2xl md:text-2xl font-thin text-center text-outline">
           Get in touch
         </h2>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
