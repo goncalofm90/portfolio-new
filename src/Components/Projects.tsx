@@ -1,19 +1,20 @@
 
-function Projects() {
+;import Carousel from "../Components/ui/carousel";
+import {
+  MonarchCocktailBar,
+  SteveTearle,
+  HellOnEarth,
+  AlexMoraisBass
+} from "./ui/slide-data";
+
+export default function Projects() {
+    const slides = [MonarchCocktailBar,SteveTearle, HellOnEarth, AlexMoraisBass ];
+
   return (
-    <section className="bg-black min-h-screen max-h-screen w-full overflow-hidden snap-child h-screen">
-      <div className="lg:flex w-full justify-between max-w-full">
-       {/* Left side text */}
-        <div className="flex-1 py-24 lg:py-48 lg:px-8">
-          <div>
-            <div className="mt-10 flex-col items-center gap-x-6">
-              <h1 className="text-white text-center">Projects</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div className="relative overflow-hidden w-full h-full py-20">
+      <h1 className="text-6xl md:text-6xl lg:text-2xl font-thin text-center text-white mb-10">
+        Projects</h1>
+      <Carousel slides={slides} />
+    </div>
   );
 }
-
-export default Projects;
