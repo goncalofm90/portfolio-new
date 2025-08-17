@@ -13,7 +13,7 @@ function About() {
       <div className="lg:flex w-full justify-between max-w-full">
         {/* Left side text */}
         <div className="flex-1 py-24 lg:py-48 lg:px-8">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+          <h1 className="text-1xl font-thin text-white sm:text-6xl">
             Hello there,
           </h1>
           <div className="px-4 mt-6 text-3xl leading-8 text-gray-600 font-thin">
