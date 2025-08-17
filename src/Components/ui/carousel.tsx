@@ -1,4 +1,4 @@
-import { IconArrowNarrowRight } from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { useState, useRef, useId, useEffect } from "react";
 
 interface SlideData {
@@ -112,28 +112,70 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
   );
 };
 
-
 interface CarouselControlProps {
-  type: string;
-  title: string;
-  handleClick: () => void;
+  type: "previous" | "next";
+  onClick: () => void;
+  disabled?: boolean;
 }
 
-const CarouselControl = ({
-  type,
-  title,
-  handleClick,
-}: CarouselControlProps) => {
+const CarouselControl = ({ type, onClick, disabled }: CarouselControlProps) => {
   return (
     <button
-      className={`w-10 h-10 flex items-center mx-2 justify-center bg-neutral-200 dark:bg-neutral-800 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 ${
-        type === "previous" ? "rotate-180" : ""
-      }`}
-      title={title}
-      onClick={handleClick}
+      onClick={onClick}
+      disabled={disabled}
+      className={`
+        group relative w-12 h-12 rounded-full 
+        bg-white dark:bg-black
+        border border-neutral-300 dark:border-neutral-700
+        shadow-lg hover:shadow-xl
+        transition-all duration-300 ease-out
+        hover:scale-110 hover:-translate-y-1
+        active:scale-105 active:translate-y-0
+        focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2
+        disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:translate-y-0
+      `}
     >
-      <IconArrowNarrowRight className="text-neutral-600 dark:text-neutral-200" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="relative flex items-center justify-center w-full h-full">
+        {type === "previous" ? (
+          <IconChevronLeft className="w-5 h-5 text-neutral-600 dark:text-neutral-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300" />
+        ) : (
+          <IconChevronRight className="w-5 h-5 text-neutral-600 dark:text-neutral-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300" />
+        )}
+      </div>
     </button>
+  );
+};
+
+interface DotIndicatorProps {
+  total: number;
+  current: number;
+  onDotClick: (index: number) => void;
+}
+
+const DotIndicator = ({ total, current, onDotClick }: DotIndicatorProps) => {
+  return (
+    <div className="flex justify-center items-center space-x-3 mt-8">
+      {Array.from({ length: total }).map((_, index) => (
+        <button
+          key={index}
+          onClick={() => onDotClick(index)}
+          className={`
+            relative w-3 h-3 rounded-full transition-all duration-300 ease-out
+            focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2
+            hover:scale-125
+            ${current === index 
+              ? "bg-gradient-to-r from-purple-500 to-blue-500 shadow-lg" 
+              : "bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-400 dark:hover:bg-neutral-500"
+            }
+          `}
+        >
+          {current === index && (
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 animate-pulse" />
+          )}
+        </button>
+      ))}
+    </div>
   );
 };
 
@@ -160,43 +202,108 @@ export default function Carousel({ slides }: CarouselProps) {
     }
   };
 
+  const handleDotClick = (index: number) => {
+    setCurrent(index);
+  };
+
   const id = useId();
 
   return (
-    <div
-      className="relative w-[70vmin] h-[70vmin] mx-auto"
-      aria-labelledby={`carousel-heading-${id}`}
-    >
-      <ul
-        className="absolute flex mx-[-4vmin] transition-transform duration-1000 ease-in-out"
-        style={{
-          transform: `translateX(-${current * (100 / slides.length)}%)`,
-        }}
-      >
-        {slides.map((slide, index) => (
-          <Slide
-            key={index}
-            slide={slide}
-            index={index}
-            current={current}
-            handleSlideClick={handleSlideClick}
+    <div className="relative w-full max-w-6xl mx-auto py-12">
+      <div className="relative flex items-center justify-center">
+        {/* Left Navigation Control */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20">
+          <CarouselControl
+            type="previous"
+            onClick={handlePreviousClick}
           />
-        ))}
-      </ul>
+        </div>
 
-      <div className="absolute flex justify-center w-full top-[calc(100%+1rem)]">
-        <CarouselControl
-          type="previous"
-          title="Go to previous slide"
-          handleClick={handlePreviousClick}
-        />
+        {/* Carousel Container */}
+        <div
+          className="relative w-[70vmin] h-[70vmin] mx-auto"
+          aria-labelledby={`carousel-heading-${id}`}
+        >
+          <ul
+            className="absolute flex mx-[-4vmin] transition-transform duration-1000 ease-in-out"
+            style={{
+              transform: `translateX(-${current * (100 / slides.length)}%)`,
+            }}
+          >
+            {slides.map((slide, index) => (
+              <Slide
+                key={index}
+                slide={slide}
+                index={index}
+                current={current}
+                handleSlideClick={handleSlideClick}
+              />
+            ))}
+          </ul>
+        </div>
 
-        <CarouselControl
-          type="next"
-          title="Go to next slide"
-          handleClick={handleNextClick}
-        />
+        {/* Right Navigation Control */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20">
+          <CarouselControl
+            type="next"
+            onClick={handleNextClick}
+          />
+        </div>
       </div>
+
+      {/* Bottom Dot Indicators */}
+      <DotIndicator
+        total={slides.length}
+        current={current}
+        onDotClick={handleDotClick}
+      />
     </div>
   );
 }
+
+// Example usage with sample data
+const sampleSlides = [
+  {
+    title: "Beautiful Landscape",
+    button: "Explore",
+    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+    url: "https://unsplash.com"
+  },
+  {
+    title: "City Architecture",
+    button: "Discover",
+    src: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop",
+    url: "https://unsplash.com"
+  },
+  {
+    title: "Ocean Waves",
+    button: "View More",
+    src: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&h=600&fit=crop",
+    url: "https://unsplash.com"
+  },
+  {
+    title: "Mountain Peak",
+    button: "Adventure",
+    src: "https://images.unsplash.com/photo-1464822759844-d150baec7296?w=800&h=600&fit=crop",
+    url: "https://unsplash.com"
+  }
+];
+
+// Demo component
+function CarouselDemo() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-8">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">
+          Enhanced Carousel
+        </h1>
+        <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          Featuring side navigation controls inspired by timeline components and elegant dot indicators for better user experience.
+        </p>
+      </div>
+      <Carousel slides={sampleSlides} />
+    </div>
+  );
+}
+
+export { CarouselDemo };
