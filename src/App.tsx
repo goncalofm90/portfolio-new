@@ -2,27 +2,26 @@ import About from "./Components/About";
 import Contact from "./Components/Contact";
 import Experience from "./Components/Experience";
 import Projects from "./Components/Projects";
-import ScrollSnapWrapper from "./Components/ui/scroll-snap-wrapper";
 import Section from "./Components/Section";
 
 function App() {
   return (
-    <ScrollSnapWrapper>
-      <Section snap>
+    <>
+      <Section >
         <About />
       </Section>
 
-      <Section>
+      <Section >
         <Experience />
       </Section>
-      <Section snap>
+      <Section >
         <Projects />
       </Section>
 
-      <Section snap>
+      <Section >
         <Contact />
       </Section>
-    </ScrollSnapWrapper>
+    </>
   );
 }
 
