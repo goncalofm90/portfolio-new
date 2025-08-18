@@ -15,12 +15,12 @@ interface SlideProps {
   handleSlideClick: (index: number) => void;
 }
 
-const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
+const Slide = ({ slide, index, current }: SlideProps) => {
   const slideRef = useRef<HTMLLIElement>(null);
 
   const xRef = useRef(0);
   const yRef = useRef(0);
-  const frameRef = useRef<number>();
+  const frameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const animate = () => {
@@ -30,7 +30,11 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
       frameRef.current = requestAnimationFrame(animate);
     };
     frameRef.current = requestAnimationFrame(animate);
-    return () => frameRef.current && cancelAnimationFrame(frameRef.current);
+    return () => {
+      if (frameRef.current !== undefined) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
   }, []);
 
   const handleMouseMove = (event: React.MouseEvent) => {
