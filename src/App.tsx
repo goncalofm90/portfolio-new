@@ -14,6 +14,7 @@ function App() {
       <Section >
         <Experience />
       </Section>
+      
       <Section >
         <Projects />
       </Section>
