@@ -7,6 +7,7 @@ export const TextHoverEffect = ({
   duration,
 }: {
   text: string;
+  className?: string;
   duration?: number;
   automatic?: boolean;
 }) => {
@@ -98,7 +99,7 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-[monospace] text-6xl font-bold dark:stroke-neutral-800"
+        className="fill-transparent stroke-neutral-200 font-satoshi text-6xl font-bold dark:stroke-neutral-800 uppercase"
         style={{ opacity: hovered ? 0.7 : 0 }}
       >
         {text}
@@ -109,7 +110,7 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-[monospace] text-6xl font-bold dark:stroke-neutral-800"
+        className="fill-transparent stroke-neutral-200 font-satoshi text-6xl font-bold dark:stroke-neutral-800 uppercase"
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{
           strokeDashoffset: 0,
@@ -130,7 +131,7 @@ export const TextHoverEffect = ({
         stroke={`url(#${textGradientId})`}
         strokeWidth="0.3"
         mask={`url(#${textMaskId})`}
-        className="fill-transparent font-[helvetica] text-6xl font-bold uppercase"
+        className="fill-transparent font-satoshi text-6xl font-bold uppercase"
       >
         {text}
       </text>
