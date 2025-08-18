@@ -9,3 +9,19 @@ body,
   height: 100%;
   width: 100%;
 }
+
+body {
+  font-family: 'Satoshi', 'Manrope', Arial, sans-serif;
+}
+
+/* Big section titles and main headings */
+h1, h2, h3 {
+  font-family: 'Manrope', 'Manrope', Arial, sans-serif;
+  font-weight: 700;
+}
+
+/* Subheadings, buttons, labels */
+h4, h5, h6, button, .caption {
+  font-family: 'Manrope', 'Satoshi', Arial, sans-serif;
+  font-weight: 500;
+}
