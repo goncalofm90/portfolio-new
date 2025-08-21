@@ -2,7 +2,6 @@ import monarch from "../../assets/images/monarch.jpg";
 import hellonearth from "../../assets/images/hellonearth.png";
 import alexmoraisbass from "../../assets/images/bass.avif";
 import stevetearl from "../../assets/images/steve.avif";
-import reactify from "../../assets/images/reactify.avif";
 
 interface SlideData {
   title: string;
