@@ -229,11 +229,11 @@ export default function Carousel({ slides }: CarouselProps) {
 
       if (Math.abs(diff) > 5) e.preventDefault(); // prevent vertical scroll
 
-      if (diff > SWIPE_THRESHOLD) {
-        nextSlide(); // swipe right → next
+      if (diff < -SWIPE_THRESHOLD) {
+        nextSlide(); // swipe left → next
         isDragging = false;
-      } else if (diff < -SWIPE_THRESHOLD) {
-        prevSlide(); // swipe left → prev
+      } else if (diff > SWIPE_THRESHOLD) {
+        prevSlide(); // swipe right → prev
         isDragging = false;
       }
     };
