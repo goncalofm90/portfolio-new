@@ -1,9 +1,9 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { useState, useRef, useId, useEffect } from "react";
+import { useState, useRef, useId, useEffect, useCallback } from "react";
 
 interface SlideData {
   title: string;
-  button: string;
+  button?: string;
   src: string;
   url: string;
 }
@@ -12,7 +12,6 @@ interface SlideProps {
   slide: SlideData;
   index: number;
   current: number;
-  handleSlideClick: (index: number) => void;
 }
 
 const Slide = ({ slide, index, current }: SlideProps) => {
@@ -189,37 +188,91 @@ interface CarouselProps {
 
 export default function Carousel({ slides }: CarouselProps) {
   const [current, setCurrent] = useState(0);
-
-  const handlePreviousClick = () => {
-    const previous = current - 1;
-    setCurrent(previous < 0 ? slides.length - 1 : previous);
-  };
-
-  const handleNextClick = () => {
-    const next = current + 1;
-    setCurrent(next === slides.length ? 0 : next);
-  };
-
-  const handleSlideClick = (index: number) => {
-    if (current !== index) {
-      setCurrent(index);
-    }
-  };
-
-  const handleDotClick = (index: number) => {
-    setCurrent(index);
-  };
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const id = useId();
 
+  const nextSlide = useCallback(() => {
+    setCurrent(prev => (prev + 1) % slides.length);
+  }, [slides.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrent(prev => (prev - 1 + slides.length) % slides.length);
+  }, [slides.length]);
+
+  const handleDotClick = (index: number) => setCurrent(index);
+
+  // Swipe
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let startX = 0;
+    let isDragging = false;
+    let wheelTimeout: number | null = null;
+
+    const SWIPE_THRESHOLD = 50; // pixels
+    const WHEEL_COOLDOWN = 200; // ms
+
+    // ---- Pointer drag ----
+    const onPointerDown = (e: PointerEvent) => {
+      startX = e.clientX;
+      isDragging = true;
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!isDragging) return;
+      const diff = e.clientX - startX;
+
+      if (diff > SWIPE_THRESHOLD) {
+        nextSlide();   // swipe right → next
+        isDragging = false;
+      } else if (diff < -SWIPE_THRESHOLD) {
+        prevSlide();   // swipe left → prev
+        isDragging = false;
+      }
+    };
+
+    const onPointerUp = () => {
+      isDragging = false;
+    };
+
+    // ---- Wheel scroll ----
+    const onWheel = (e: WheelEvent) => {
+      if (wheelTimeout) return;
+
+      if (Math.abs(e.deltaX) > 20) {
+        if (e.deltaX > 0) nextSlide();
+        else prevSlide();
+
+        wheelTimeout = setTimeout(() => {
+          wheelTimeout = null;
+        }, WHEEL_COOLDOWN);
+      }
+    };
+
+    // ---- Attach listeners ----
+    el.addEventListener("pointerdown", onPointerDown);
+    el.addEventListener("pointermove", onPointerMove);
+    el.addEventListener("pointerup", onPointerUp);
+    el.addEventListener("wheel", onWheel);
+
+    return () => {
+      el.removeEventListener("pointerdown", onPointerDown);
+      el.removeEventListener("pointermove", onPointerMove);
+      el.removeEventListener("pointerup", onPointerUp);
+      el.removeEventListener("wheel", onWheel);
+      if (wheelTimeout) clearTimeout(wheelTimeout);
+    };
+  }, [nextSlide, prevSlide]); // run once, assume nextSlide/prevSlide are stable
+
   return (
-    <div className="relative w-full max-w-6xl mx-auto py-12">
-      <div className="relative flex items-center justify-center">
+    <div className="relative w-full max-w-6xl mx-auto py-12" ref={containerRef}>
+      <div className="relative flex items-center justify-center overflow-visible">
         {/* Left Navigation Control */}
         <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20">
           <CarouselControl
             type="previous"
-            onClick={handlePreviousClick}
+            onClick={prevSlide}
           />
         </div>
 
@@ -240,7 +293,6 @@ export default function Carousel({ slides }: CarouselProps) {
                 slide={slide}
                 index={index}
                 current={current}
-                handleSlideClick={handleSlideClick}
               />
             ))}
           </ul>
@@ -250,7 +302,7 @@ export default function Carousel({ slides }: CarouselProps) {
         <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20">
           <CarouselControl
             type="next"
-            onClick={handleNextClick}
+            onClick={nextSlide}
           />
         </div>
       </div>
