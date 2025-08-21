@@ -1,6 +1,19 @@
 import React from "react";
-import { FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJsSquare } from "react-icons/fa";
-import { SiMongodb, SiTailwindcss, SiTypescript } from "react-icons/si";
+import { 
+  FaReact, 
+  FaNodeJs, 
+  FaHtml5, 
+  FaCss3Alt, 
+  FaJsSquare 
+} from "react-icons/fa";
+import { 
+  SiMongodb, 
+  SiTailwindcss, 
+  SiTypescript, 
+  SiVuedotjs,   
+  SiPostgresql, 
+  SiKubernetes 
+} from "react-icons/si";
 
 const stackIcons = [
   FaReact,
@@ -11,6 +24,9 @@ const stackIcons = [
   SiMongodb,
   SiTailwindcss,
   SiTypescript,
+  SiVuedotjs,   
+  SiPostgresql,     
+  SiKubernetes,
 ];
 
 const TechStackScroller: React.FC<{ size?: number; speed?: number }> = ({
