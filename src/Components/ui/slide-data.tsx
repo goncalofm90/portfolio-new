@@ -2,6 +2,7 @@ import monarch from "../../assets/images/monarch.jpg";
 import hellonearth from "../../assets/images/hellonearth.png";
 import alexmoraisbass from "../../assets/images/bass.avif";
 import stevetearl from "../../assets/images/steve.avif";
+import reeldock from "../../assets/images/reeldock.avif";
 
 interface SlideData {
   title: string;
@@ -36,6 +37,13 @@ export const AlexMoraisBass: SlideData = {
   button: "Explore",
   src: alexmoraisbass,
   url: "https://alexmoraisbass.netlify.app/"
+};
+
+export const ReelDock: SlideData = {
+  title: "ReelDock",
+  button: "Explore",
+  src: reeldock,
+  url: "https://reeldock.netlify.app/"
 };
 
 

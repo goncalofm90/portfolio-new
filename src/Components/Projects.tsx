@@ -6,11 +6,12 @@ import {
   MonarchCocktailBar,
   SteveTearle,
   HellOnEarth,
-  AlexMoraisBass
+  AlexMoraisBass,
+  ReelDock
 } from "./ui/slide-data";
 
 export default function Projects() {
-  const slides = [MonarchCocktailBar, SteveTearle, HellOnEarth, AlexMoraisBass];
+  const slides = [MonarchCocktailBar, SteveTearle, HellOnEarth, AlexMoraisBass, ReelDock];
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
   return (
