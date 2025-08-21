@@ -10,7 +10,7 @@ export const Avatar = () => {
       transition={{ duration: 3, ease: "easeOut" }}
     >
       <div
-        className="aspect-[3/4] w-full max-w-lg overflow-hidden rounded-3xl sm:max-w-3xl lg:max-w-none"
+        className="aspect-[3/4] w-full max-w-sm overflow-hidden rounded-3xl sm:max-w-md lg:max-w-lg xl:max-w-xl"
         style={{
           clipPath: "polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%)",
         }}
@@ -18,7 +18,7 @@ export const Avatar = () => {
         <img
           src={avatar}
           alt="Gonçalo Mendes web developer"
-          className="w-full object-cover object-center text-center"
+          className="w-full h-full object-cover object-center"
         />
       </div>
     </motion.div>
