@@ -29,26 +29,17 @@ const About: React.FC = () => {
           >
             Hello there,
           </motion.h1>
-          
           <div className="px-1 mt-4 sm:mt-6 text-lg sm:text-xl md:text-2xl lg:text-3xl leading-7 sm:leading-8 text-gray-300 font-thin">
             <FlipWords words={words} />
           </div>
-          
           <div className="mt-6 sm:mt-8 lg:mt-10 flex flex-col items-center sm:items-start gap-y-2 sm:gap-y-4">
-            <TextHoverEffect 
-              text="Gonçalo" 
-              className="from-purple-400 via-blue-400 to-purple-300" 
-            />
-            <TextHoverEffect 
-              text="Mendes" 
-              className="from-purple-400 via-blue-400 to-purple-300" 
-            />
+            <TextHoverEffect text="Gonçalo" className="from-purple-400 via-blue-400 to-purple-300" />
+            <TextHoverEffect text="Mendes" className="from-purple-400 via-blue-400 to-purple-300" />
           </div>
         </div>
-        
         {/* Right side angled image */}
         <div className="flex justify-center items-center px-4 py-8 lg:py-0 order-1 lg:order-2">
-          <Avatar />
+        <Avatar />
         </div>
       </div>
     </section>
