@@ -90,7 +90,7 @@ export default function Experience() {
           </div>
           
           <div className="mb-6">
-            <h5 className="text-sm sm:text-base font-medium text-neutral-300 mb-3">Key Achievements:</h5>
+            <h5 className="text-sm sm:text-base font-medium text-neutral-300 mb-3">Key Responsibilities:</h5>
             <div className="space-y-2 sm:space-y-3">
               <div className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm md:text-base text-neutral-300">
                 <span className="text-purple-400 mt-1 flex-shrink-0">▶</span>
@@ -147,11 +147,11 @@ export default function Experience() {
               </div>
               <div className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm md:text-base text-neutral-300">
                 <span className="text-cyan-400 mt-1 flex-shrink-0">▶</span>
-                <span>Video & Image gallery implementation</span>
+                <span>Video & Image gallery implementation for the aforementioned project</span>
               </div>
               <div className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm md:text-base text-neutral-300">
                 <span className="text-cyan-400 mt-1 flex-shrink-0">▶</span>
-                <span>MERN stack development (MongoDB, Express, React, Node.js)</span>
+                <span>MERN stack development (MongoDB, Express, React, Node.js) of applications for other clients</span>
               </div>
               <div className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm md:text-base text-neutral-300">
                 <span className="text-cyan-400 mt-1 flex-shrink-0">▶</span>
