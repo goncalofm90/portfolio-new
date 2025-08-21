@@ -210,24 +210,30 @@ export default function Carousel({ slides }: CarouselProps) {
     let isDragging = false;
     let wheelTimeout: number | null = null;
 
-    const SWIPE_THRESHOLD = 50; // pixels
+    const SWIPE_THRESHOLD = 30; // lower for mobile
     const WHEEL_COOLDOWN = 200; // ms
 
-    // ---- Pointer drag ----
-    const onPointerDown = (e: PointerEvent) => {
-      startX = e.clientX;
+    // Get clientX from pointer or touch
+    const getClientX = (e: PointerEvent | TouchEvent) =>
+      "touches" in e ? e.touches[0].clientX : e.clientX;
+
+    // ---- Pointer / Touch Handlers ----
+    const onPointerDown = (e: PointerEvent | TouchEvent) => {
+      startX = getClientX(e);
       isDragging = true;
     };
 
-    const onPointerMove = (e: PointerEvent) => {
+    const onPointerMove = (e: PointerEvent | TouchEvent) => {
       if (!isDragging) return;
-      const diff = e.clientX - startX;
+      const diff = getClientX(e) - startX;
+
+      if (Math.abs(diff) > 5) e.preventDefault(); // prevent vertical scroll
 
       if (diff > SWIPE_THRESHOLD) {
-        nextSlide();   // swipe right → next
+        nextSlide(); // swipe right → next
         isDragging = false;
       } else if (diff < -SWIPE_THRESHOLD) {
-        prevSlide();   // swipe left → prev
+        prevSlide(); // swipe left → prev
         isDragging = false;
       }
     };
@@ -254,16 +260,28 @@ export default function Carousel({ slides }: CarouselProps) {
     el.addEventListener("pointerdown", onPointerDown);
     el.addEventListener("pointermove", onPointerMove);
     el.addEventListener("pointerup", onPointerUp);
+
+    el.addEventListener("touchstart", onPointerDown, { passive: false });
+    el.addEventListener("touchmove", onPointerMove, { passive: false });
+    el.addEventListener("touchend", onPointerUp);
+
     el.addEventListener("wheel", onWheel);
+
 
     return () => {
       el.removeEventListener("pointerdown", onPointerDown);
       el.removeEventListener("pointermove", onPointerMove);
       el.removeEventListener("pointerup", onPointerUp);
+
+      el.removeEventListener("touchstart", onPointerDown);
+      el.removeEventListener("touchmove", onPointerMove);
+      el.removeEventListener("touchend", onPointerUp);
+
       el.removeEventListener("wheel", onWheel);
+
       if (wheelTimeout) clearTimeout(wheelTimeout);
     };
-  }, [nextSlide, prevSlide]); // run once, assume nextSlide/prevSlide are stable
+  }, [nextSlide, prevSlide]);
 
   return (
     <div className="relative w-full max-w-6xl mx-auto py-12" ref={containerRef}>
