@@ -3,8 +3,29 @@ import { Vortex } from "../Components/ui/vortex";
 import { CiLinkedin } from "react-icons/ci";
 import { FaGithub } from "react-icons/fa";
 import { TbFileCv } from "react-icons/tb";
+import { MdEmail } from "react-icons/md";
 import GradientIconButton from "./ui/button";
 import TechStackScroller from "./ui/tech-stack-scroller";
+
+const socialLinks = [
+  {
+    icon: CiLinkedin,
+    url: "https://www.linkedin.com/in/goncalo-mendes/",
+  },
+  {
+    icon: FaGithub,
+    url: "https://github.com/goncalofm90",
+  },
+  {
+    icon: TbFileCv,
+    url: "/CVGM2025.pdf",
+    download: "CVGM2025.pdf",
+  },
+  {
+    icon: MdEmail,
+    url: "mailto:goncalofm90@gmail.com",
+  },
+];
 
 const Contact: React.FC = () => {
   return (
@@ -30,22 +51,15 @@ const Contact: React.FC = () => {
 
           {/* Social Buttons */}
           <div className="flex flex-row items-center gap-4 sm:gap-6 mt-2 flex-wrap justify-center">
-            <GradientIconButton
-              icon={CiLinkedin}
-              url="https://www.linkedin.com/in/goncalo-mendes/"
-              size={36}
-            />
-            <GradientIconButton
-              icon={FaGithub}
-              url="https://github.com/goncalofm90"
-              size={36}
-            />
-            <GradientIconButton
-              icon={TbFileCv}
-              url="/CVGM2025.pdf"
-              download="CVGM2025.pdf"
-              size={36}
-            />
+            {socialLinks.map((link, index) => (
+              <GradientIconButton
+                key={index}
+                icon={link.icon}
+                url={link.url}
+                download={link.download}
+                size={36}
+              />
+            ))}
           </div>
         </div>
 
