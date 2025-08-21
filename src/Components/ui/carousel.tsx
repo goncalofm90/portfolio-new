@@ -247,8 +247,8 @@ export default function Carousel({ slides }: CarouselProps) {
       if (wheelTimeout) return;
 
       if (Math.abs(e.deltaX) > 20) {
-        if (e.deltaX > 0) nextSlide();
-        else prevSlide();
+        if (e.deltaX > 0) prevSlide();
+        else nextSlide();
 
         wheelTimeout = setTimeout(() => {
           wheelTimeout = null;
