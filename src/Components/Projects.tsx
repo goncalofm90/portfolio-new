@@ -3,15 +3,23 @@ import Carousel from "../Components/ui/carousel";
 import ScrollIndicator from "../Components/ui/scroll-indicator";
 
 import {
+  Foodi3,
   MonarchCocktailBar,
   SteveTearle,
   HellOnEarth,
   AlexMoraisBass,
-  ReelDock
+  ReelDock,
 } from "./ui/slide-data";
 
 export default function Projects() {
-  const slides = [MonarchCocktailBar, SteveTearle, HellOnEarth, AlexMoraisBass, ReelDock];
+  const slides = [
+    Foodi3,
+    MonarchCocktailBar,
+    SteveTearle,
+    HellOnEarth,
+    AlexMoraisBass,
+    ReelDock,
+  ];
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
   return (
@@ -24,8 +32,8 @@ export default function Projects() {
             Featured Projects
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-            A showcase of my work, from web applications to innovative solutions, 
-            demonstrating my skills across the full technology stack.
+            A showcase of my work, from web applications to innovative
+            solutions, demonstrating my skills across the full technology stack.
           </p>
 
           {/* Scroll Down Indicator */}
